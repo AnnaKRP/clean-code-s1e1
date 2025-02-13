@@ -5,17 +5,15 @@
 //Solution: Add interactivity so the user can manage daily tasks.
 //Break things down into smaller steps and take each step at a time.
 
-
 // Event handling, user interaction is what starts the code execution.
 
 var taskInput = document.getElementById("new-task"); //Add a new task.
-var addButton = document.getElementsByClassName("todo-app__add-button")[0]; //first button
+var addButton = document.getElementsByClassName("todo-app__button--add")[0]; //first button
 var incompleteTaskHolder = document.getElementById("incompleteTasks"); //ul of #incompleteTasks
 var completedTasksHolder = document.getElementById("completed-tasks"); //completed-tasks
 
 //New task list item
 var createNewTaskElement = function (taskString) {
-
     var listItem = document.createElement("li");
     listItem.className = "todo-app__task-item";
 
@@ -37,11 +35,11 @@ var createNewTaskElement = function (taskString) {
     //button.edit
     var editButton = document.createElement("button"); //edit button
     editButton.innerText = "Edit";
-    editButton.className = "todo-app__task-edit";
+    editButton.className = "todo-app__button--edit";
 
     //button.delete
     var deleteButton = document.createElement("button"); //delete button
-    deleteButton.className = "todo-app__task-delete";
+    deleteButton.className = "todo-app__button--delete";
     var deleteButtonImg = document.createElement("img"); //delete button image
     deleteButtonImg.src = './remove.svg';
     deleteButton.appendChild(deleteButtonImg);
@@ -67,7 +65,6 @@ var addTask = function () {
     bindTaskEvents(listItem, taskCompleted);
 
     taskInput.value = "";
-
 }
 
 //Edit an existing task.
@@ -76,10 +73,9 @@ var editTask = function () {
     console.log("Change 'edit' to 'save'");
 
     var listItem = this.parentNode;
-
     var editInput = listItem.querySelector('.todo-app__task-input');
     var label = listItem.querySelector(".todo-app__task-label");
-    var editBtn = listItem.querySelector(".todo-app__task-edit");
+    var editBtn = listItem.querySelector(".todo-app__button--edit");
     var containsClass = listItem.classList.contains("todo-app__task-item--edit-mode");
 
     //If class of the parent is .editmode
@@ -114,6 +110,8 @@ var taskCompleted = function () {
 
     //Append the task list item to the #completed-tasks
     var listItem = this.parentNode;
+    var label = listItem.querySelector(".todo-app__task-label");
+    label.classList.add("todo-app__task-label--completed");
     completedTasksHolder.appendChild(listItem);
     bindTaskEvents(listItem, taskIncomplete);
 }
@@ -124,6 +122,8 @@ var taskIncomplete = function () {
     //When the checkbox is unchecked
     //Append the task list item to the #incompleteTasks.
     var listItem = this.parentNode;
+    var label = listItem.querySelector(".todo-app__task-label");
+    label.classList.toggle("todo-app__task-label--completed");
     incompleteTaskHolder.appendChild(listItem);
     bindTaskEvents(listItem, taskCompleted);
 }
@@ -143,8 +143,8 @@ var bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
     console.log("bind list item events");
     //select ListItems children
     var checkBox = taskListItem.querySelector(".todo-app__task-checkbox");
-    var editButton = taskListItem.querySelector(".todo-app__task-edit");
-    var deleteButton = taskListItem.querySelector(".todo-app__task-delete");
+    var editButton = taskListItem.querySelector(".todo-app__button--edit");
+    var deleteButton = taskListItem.querySelector(".todo-app__button--delete");
 
     //Bind editTask to edit button.
     editButton.onclick = editTask;
@@ -157,7 +157,6 @@ var bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
 //cycle over incompleteTaskHolder ul list items
 //for each list item
 for (var i = 0; i < incompleteTaskHolder.children.length; i++) {
-
     //bind events to list items chldren(tasksCompleted)
     bindTaskEvents(incompleteTaskHolder.children[i], taskCompleted);
 }
@@ -167,7 +166,6 @@ for (var i = 0; i < completedTasksHolder.children.length; i++) {
     //bind events to list items chldren(tasksIncompleted)
     bindTaskEvents(completedTasksHolder.children[i], taskIncomplete);
 }
-
 
 // Issues with usability don't get seen until they are in front of a human tester.
 
