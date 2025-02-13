@@ -139,13 +139,13 @@ button:hover {
     width: 226px;
 }
 
-.todo-app__task-delete img {
+.todo-app__button--delete img {
     height: 2em;
     transform: rotateZ(45deg);
     transition: transform 200ms ease-in;
 }
 
-.todo-app__task-delete img:hover {
+.todo-app__button--delete img:hover {
     transform: rotateZ(0);
 }
 
